@@ -7,7 +7,15 @@
 // be made list_editable in the ModelAdmin. The changes of the ordering are 
 // applied after clicking 'Save'.
 
+var fixHelper = function(e, ui) {
+    ui.children().each(function() {
+        $(this).width($(this).width());
+    });
+    return ui;
+};
+
 (function($) {
+    
     $(document).ready(function($) {
         if($('#result_list').length == 1)         // Grappelli not installed
             table = $('#result_list')[0];
@@ -31,7 +39,7 @@
             
         // Some visual enhancements
         header = $(table).find('thead tr').children()[pos_col];
-        $(header).css('width', '1em');
+        //$(header).css('width', '1em');
         $(header).children('a').text('#');
     
         // Hide position field
@@ -59,8 +67,9 @@
     
         // Make tbody > tr sortable
         $(table).find('tbody').sortable({
-            items: 'tr',
+            items: '.grp-row',
             cursor: 'move',
+            axis: 'y',
             update: function(event, ui) {
                 item = ui.item;
                 items = $(this).find('tr').get();
@@ -84,6 +93,6 @@
                 $(this).find('tr:even').addClass('row1');
                 $(this).find('tr:odd').addClass('row2');
             }
-        });
+        }).css({'float': 'none'});
     });
-})(jQuery);
+})(grp.jQuery);
